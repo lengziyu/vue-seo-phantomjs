@@ -14,8 +14,6 @@ var page = require('webpage').create();
 var system = require('system');
 // 从CLI中获取第二个参数为目标URL
 var url = system.args[1];
-// var url = 'http://tgyp.youboy.com/mall'
-// var url = 'http://dgyp.youboy.com/mall'
 // 设置PhantomJS视窗大小
 page.viewportSize = {
     width: 1280,
