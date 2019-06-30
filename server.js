@@ -9,7 +9,6 @@ var child_process = require('child_process');
 app.get('*', function(req, res){
     // 完整URL
     var url = req.protocol + '://'+ req.hostname + req.originalUrl;
-// var url = 'https://gyp.youboy.com' + req.originalUrl;
     // 预渲染后的页面字符串容器
     var content = '';
     // 开启一个phantomjs子进程
@@ -22,10 +21,6 @@ app.get('*', function(req, res){
     });
     // 监听子进程退出事件
     phantom.on('exit', function(code){
-    console.log("url是：")
-    console.log(url)
-    console.log("code是：")
-    console.log(code)
     console.log("content是：")
     console.log(content)
         switch (code){
