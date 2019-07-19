@@ -26,3 +26,31 @@ $ cnpm i
 $ phantomjs spider.js 'https://www.baidu.com/'
 ```
 打印出一堆html代码就说明成功了。
+
+# 线上部署
+请先安装PM2、phantomjs、nodejs，并配置全局环境变量。
+```
+# 运行
+PM2 start server.js
+```
+nginx配置：
+```
+upstream spider_server {
+  server localhost:8081;
+}
+
+server {
+    listen       80;
+    server_name  example.com;
+    
+    location / {
+      proxy_set_header  Host            $host:$proxy_port;
+      proxy_set_header  X-Real-IP       $remote_addr;
+      proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
+
+      if ($http_user_agent ~* "Baiduspider|twitterbot|facebookexternalhit|rogerbot|linkedinbot|embedly|quora link preview|showyoubot|outbrain|pinterest|slackbot|vkShare|W3C_Validator|bingbot|Sosospider|Sogou Pic Spider|Googlebot|360Spider") {
+        proxy_pass  http://spider_server;
+      }
+    }
+}
+```
